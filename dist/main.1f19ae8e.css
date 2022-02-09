@@ -1,0 +1,144 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+  color: white;
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #d95550c5;
+  background-color: #d95550;
+}
+.container > * {
+  padding: 3rem;
+}
+.container__title {
+  font-weight: 900;
+  font-size: 3rem;
+}
+.container__main {
+  width: 90vw;
+  height: min-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #de6965;
+  padding: 2rem;
+  border-radius: 5px;
+}
+@media only screen and (min-width: 1024px) {
+  .container__main {
+    width: 50vw;
+  }
+}
+@media only screen and (min-width: 1370px) {
+  .container__main {
+    width: 40vw;
+  }
+}
+.container__main > * {
+  padding-bottom: 0.25rem;
+  padding-top: 0.25rem;
+  margin-bottom: 2rem;
+}
+.container__main__menu {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  width: 100%;
+  border-bottom: solid #0000001c;
+}
+.container__main__menu__option {
+  list-style: none;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: none;
+  background-color: #de6965;
+  transition: background-color ease-in-out 400ms;
+}
+.container__main__menu__option:hover {
+  background-color: #0000003d;
+}
+.container__main__menu__option_selected {
+  transition: background-color ease-in-out 400ms;
+  background-color: #0000003d;
+}
+.container__main__timer-box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.container__main__timer-box > * {
+  padding-bottom: 1rem;
+}
+.container__main__timer-box__timer {
+  font-size: 6rem;
+  transition: all ease-in-out 200ms;
+}
+.container__main__timer-box__btn-box {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.container__main__timer-box__btn-box__btn {
+  padding: 0.75rem 4rem;
+  border-radius: 5px;
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  color: #d95550;
+  font-size: 2rem;
+  font-weight: 600;
+  transition: all ease-in-out 400ms;
+}
+.container__main__timer-box__btn-box__btn:hover {
+  transform: scale(1.05);
+}
+.container__main__timer-box__btn-box__btn_shown {
+  display: block;
+}
+.container__main__timer-box__btn-box__btn_hidden {
+  display: none !important;
+}
+.container__main__timer-box__btn-box__btn_cancel {
+  position: absolute;
+  padding: 0.5rem 1rem;
+  border-radius: 50%;
+  right: -8%;
+  display: block;
+}
+@media only screen and (min-width: 425px) {
+  .container__main__timer-box__btn-box__btn_cancel {
+    right: 3%;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .container__main__timer-box__btn-box__btn_cancel {
+    right: 25%;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  .container__main__timer-box__btn-box__btn_cancel {
+    right: 15%;
+  }
+}
+@media only screen and (min-width: 1370px) {
+  .container__main__timer-box__btn-box__btn_cancel {
+    right: 20%;
+  }
+}
+
+/*# sourceMappingURL=/main.1f19ae8e.css.map */

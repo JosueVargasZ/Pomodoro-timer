@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>A JavaScript project</title>
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <section class="container">
+    <h1 class="container__title">Pomodoro Timer</h1>
+    <main class="container__main">
+      <ul class="container__main__menu">
+        <li id="menu_pomodoro" class="container__main__menu__option">Pomodoro</li>
+        <li id="menu_shrt_break" class="container__main__menu__option ">Short Break</li>
+        <li id="menu_lng_break" class="container__main__menu__option">Long Break</li>
+      </ul>
+      <section class="container__main__timer-box">
+        <h5 class="container__main__timer-box__timer"></h5>
+        <div class="container__main__timer-box__btn-box">
+          <button id="btn-start" class="container__main__timer-box__btn-box__btn container__main__timer-box__btn-box__btn_shown">Start</button>
+          <button id="btn-stop" class="container__main__timer-box__btn-box__btn container__main__timer-box__btn-box__btn_shown container__main__timer-box__btn-box__btn_hidden">Stop</button>
+          <button id="btn-cancel" class="container__main__timer-box__btn-box__btn container__main__timer-box__btn-box__btn_shown container__main__timer-box__btn-box__btn_hidden container__main__timer-box__btn-box__btn_cancel">x</button>
+
+        </div>
+      </section>
+    </main>
+  </section>
+  
+  <script src="main.js"></script>
+</body>
+</html>

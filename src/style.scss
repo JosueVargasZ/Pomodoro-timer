@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+$colorPalette: (
+    "primary": #d95550, 
+    "secondary": #4C9195, 
+    "tertiary": #457CA3);
+
+    //==================== Size variables ====================
+$lg-phone: 425px;
+$tablet: 768px;
+$desktop: 1024px;
+$lg-desktop: 1370px;
+
+// This function get the color of the map $lightPalette
+@function setColor( $color ){
+    @return map-get($colorPalette , $color ) 
+};
+
+// Mixin for Media Queries
+@mixin media( $size ) {
+    @media only screen and (min-width: $size ){
+        @content;
+    }
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+}
+
+
+.container{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #d95550c5;
+    background-color: setColor(primary);
+    // background-color: #4C9195c5;
+    // background-color: #457CA3c5;
+    &>*{
+        padding: 3rem;
+    }
+    &__title{
+        font-weight: 900;
+        font-size: 3rem;
+
+    }
+    &__main{
+        @include media($desktop){
+            width: 50vw;
+        }
+        @include media($lg-desktop){
+            width: 40vw;
+        }
+        width: 90vw;
+        height: min-content;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: lighten(setColor(primary),5);
+        padding: 2rem;
+        border-radius: 5px;
+        &>*{
+            padding-bottom: 0.25rem;
+            padding-top: 0.25rem;
+            margin-bottom: 2rem;
+        }
+
+        &__menu{
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-evenly;
+            width: 100%;
+            border-bottom: solid #0000001c;
+            &__option{
+                list-style: none;
+                cursor: pointer;
+                padding: 0.50rem 1rem;
+                border-radius: 5px;
+                border: none;
+                background-color: lighten(setColor(primary),5);
+                transition: background-color ease-in-out 400ms;
+                &:hover{
+                    background-color: #0000003d;
+                }
+                &_selected{
+                    transition: background-color ease-in-out 400ms;
+                    background-color: #0000003d;
+                }
+            }
+        }
+
+        &__timer-box{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            &>*{
+                padding-bottom: 1rem;
+            }
+            &__timer{
+                font-size: 6rem;
+                transition: all ease-in-out 200ms;
+                
+            }
+            &__btn-box{
+                position: relative;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-evenly;
+
+                &__btn{
+                    padding: 0.75rem 4rem;
+                    border-radius: 5px;
+                    border: none;
+                    background-color: white;
+                    cursor: pointer;
+                    color: setColor(primary);
+                    font-size: 2rem;
+                    font-weight: 600;
+                    transition: all ease-in-out 400ms;
+                    &:hover{
+                        transform: scale(1.05);
+                    }
+
+                    &_shown{
+                        // visibility: visible;
+                        display: block;
+                    }
+                    &_hidden{
+                        // visibility: hidden;
+                        display: none !important;
+                    }
+                    &_cancel{
+                        position: absolute;
+                        padding: 0.50rem 1rem;
+                        border-radius: 50%;
+                        @include media($lg-phone){
+                            right: 3%;
+                        }
+                        @include media($tablet){
+                            right: 25%;
+                        }
+                        @include media($desktop){
+                            right: 15%;
+                        }
+                        @include media($lg-desktop){
+                            right: 20%;
+                        }
+                        right: -8%;
+                        display: block;
+                    }
+
+                }
+            }
+        }
+        
+    }
+}
