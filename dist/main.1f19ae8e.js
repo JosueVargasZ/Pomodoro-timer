@@ -194,12 +194,37 @@ module.hot.accept(reloadCSS);
 
 require("./style.scss");
 
-var minutes = 1;
-var seconds = 0;
+var pomodoroCounter = {
+  counter: 1,
+  actionedBy: "pomodoro",
+  firstTime: true,
+  pomodoroTimer: 25,
+  shortBreakTimer: 5,
+  longBreakTimer: 15
+};
+
+var resetPomodoroCounter = function resetPomodoroCounter() {
+  pomodoroCounter = {
+    counter: 1,
+    actionedBy: "pomodoro",
+    firstTime: true,
+    pomodoroTimer: 25,
+    //use as the initial value for the pomodoro
+    shortBreakTimer: 5,
+    //use as the initial value for the short break
+    longBreakTimer: 15 //use as the initial value for the long break
+
+  };
+  menuPomodoro.click();
+};
+
+var minutes = 0;
+var seconds = 5;
 var interval;
 var menuPomodoro = document.querySelector("#menu_pomodoro");
 var menuShrtBreak = document.querySelector("#menu_shrt_break");
 var menuLngBreak = document.querySelector("#menu_lng_break");
+var pomodoroCounterH2 = document.querySelector("#pomodoroCounter");
 var timer = document.querySelector(".container__main__timer-box__timer");
 var btnStart = document.querySelector("#btn-start");
 var btnStop = document.querySelector("#btn-stop");
@@ -207,26 +232,38 @@ var btnCancel = document.querySelector("#btn-cancel");
 window.addEventListener("load", function () {
   menuPomodoro.classList.add("container__main__menu__option_selected");
   timer.innerHTML = "".concat(minutes < 10 ? "0" + minutes : minutes, ":").concat(seconds < 10 ? "0" + seconds : seconds);
+  pomodoroCounterH2.innerHTML = "#".concat(pomodoroCounter.counter);
 });
 menuPomodoro.addEventListener("click", function () {
-  setTimer(25, 0);
+  pomodoroCounter.actionedBy = "pomodoro";
+  setTimer(0, 5);
   menuPomodoro.classList.add("container__main__menu__option_selected");
   menuShrtBreak.classList.remove("container__main__menu__option_selected");
   menuLngBreak.classList.remove("container__main__menu__option_selected");
 });
 menuShrtBreak.addEventListener("click", function () {
-  setTimer(5, 0);
+  pomodoroCounter.actionedBy = "short-break";
+  setTimer(0, 6);
   menuShrtBreak.classList.add("container__main__menu__option_selected");
   menuPomodoro.classList.remove("container__main__menu__option_selected");
   menuLngBreak.classList.remove("container__main__menu__option_selected");
 });
 menuLngBreak.addEventListener("click", function () {
-  setTimer(15, 0);
+  pomodoroCounter.actionedBy = "long-break";
+  setTimer(0, 7);
   menuLngBreak.classList.add("container__main__menu__option_selected");
   menuShrtBreak.classList.remove("container__main__menu__option_selected");
   menuPomodoro.classList.remove("container__main__menu__option_selected");
 });
 btnStart.addEventListener("click", function () {
+  if (pomodoroCounter.actionedBy === "pomodoro" && pomodoroCounter.firstTime) {
+    pomodoroCounter.firstTime = false;
+    pomodoroCounterH2.innerHTML = "#".concat(pomodoroCounter.counter);
+  } else if (pomodoroCounter.actionedBy === "pomodoro") {
+    pomodoroCounter.counter += 1;
+    pomodoroCounterH2.innerHTML = "#".concat(pomodoroCounter.counter);
+  }
+
   btnStart.classList.add("container__main__timer-box__btn-box__btn_hidden");
   btnStop.classList.remove("container__main__timer-box__btn-box__btn_hidden");
   btnCancel.classList.remove("container__main__timer-box__btn-box__btn_hidden");
@@ -252,25 +289,34 @@ var setTimer = function setTimer(mins, secs) {
 };
 
 var runTimer = function runTimer() {
-  var initialMinutes = minutes;
-  var initialSeconds = seconds;
   interval = setInterval(function () {
     if (seconds === 0) {
       if (minutes > 0) {
         minutes -= 1;
         seconds = 59;
-        timer.innerHTML = "".concat(minutes < 10 ? "0" + minutes : minutes, ":").concat(seconds < 10 ? "0" + seconds : seconds); // console.log( `${ ( minutes < 10 ) ? "0"+ minutes : minutes }:${( seconds<10 ) ? "0"+ seconds : seconds}` );
+        timer.innerHTML = "".concat(minutes < 10 ? "0" + minutes : minutes, ":").concat(seconds < 10 ? "0" + seconds : seconds);
       } else {
         stopTimer();
-        menuShrtBreak.click(); // minutes = initialMinutes;
-        // seconds = initialSeconds;
-        // timer.innerHTML = `${ ( minutes < 10 ) ? "0"+ minutes : minutes }:${( seconds<10 ) ? "0"+ seconds : seconds}`;
 
-        console.log("End of timer");
+        if (pomodoroCounter.actionedBy === "short-break" && pomodoroCounter.counter === 4) {
+          menuLngBreak.click();
+        } else if (pomodoroCounter.actionedBy === "pomodoro") {
+          menuShrtBreak.click();
+        } else if (pomodoroCounter.actionedBy === "short-break" || pomodoroCounter.actionedBy === "long-break") {
+          if (pomodoroCounter.actionedBy === "long-break" && pomodoroCounter.counter === 4) {
+            cancelTimer();
+          }
+
+          menuPomodoro.click();
+        }
+
+        btnStop.classList.add("container__main__timer-box__btn-box__btn_hidden");
+        btnCancel.classList.add("container__main__timer-box__btn-box__btn_hidden");
+        btnStart.classList.remove("container__main__timer-box__btn-box__btn_hidden");
       }
     } else {
       seconds -= 1;
-      timer.innerHTML = "".concat(minutes < 10 ? "0" + minutes : minutes, ":").concat(seconds < 10 ? "0" + seconds : seconds); // console.log( `${ ( minutes < 10 ) ? "0"+ minutes : minutes }:${( seconds<10 ) ? "0"+ seconds : seconds}` );
+      timer.innerHTML = "".concat(minutes < 10 ? "0" + minutes : minutes, ":").concat(seconds < 10 ? "0" + seconds : seconds);
     }
   }, 1000);
 };
@@ -280,10 +326,11 @@ var stopTimer = function stopTimer() {
 };
 
 var cancelTimer = function cancelTimer() {
-  clearInterval(interval);
-  menuPomodoro.click();
+  resetPomodoroCounter();
+  clearInterval(interval); // menuPomodoro.click();
+
   timer.innerHTML = "".concat(minutes < 10 ? "0" + minutes : minutes, ":").concat(seconds < 10 ? "0" + seconds : seconds);
-  console.log("Timer canceled");
+  pomodoroCounterH2.innerHTML = "#".concat(pomodoroCounter.counter);
 };
 },{"./style.scss":"style.scss"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -313,7 +360,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50045" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50734" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
